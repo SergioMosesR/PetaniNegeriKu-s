@@ -24,7 +24,7 @@
                 </div>
 
                 <!-- Buy Button with Modal Trigger -->
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal{{ $post->id }}">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal-{{ $post->id }}">
                     Buy
                 </button>
             </div>
@@ -34,58 +34,69 @@
 
     <!-- Modal Template -->
     @foreach ($posts as $post)
-    <div class="modal fade" id="postModal{{ $post->id }}" tabindex="-1" aria-labelledby="postModalLabel{{ $post->id }}"
-        aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="postModal-{{ $post->id }}" tabindex="-1"
+        aria-labelledby="postModalLabel-{{ $post->id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="postModalLabel{{ $post->id }}">{{ $post->title }}</h5>
+                    <h5 class="modal-title" id="postModalLabel-{{ $post->id }}">{{ $post->title }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Display post content in larger view -->
-                    <div class="mb-3">
-                        <img src="{{ asset('storage/uploads/' . basename($post->image)) }}" class="img-fluid mb-3"
-                            alt="Post Image">
-                        <p><strong>Description:</strong> {{ $post->content }}</p>
-                        <p><strong>Price:</strong> Rp {{ number_format($post->price, 0, ',', '.') }}</p>
-                        <p><strong>Qty Available:</strong> {{ $post->qty }} {{ $post->unit }}</p>
-                    </div>
-                    <form wire:submit.prevent='StorePending'>
-                        <!-- Input for qty -->
-                        <div class="mb-3">
-                            <label for="qty{{ $post->id }}" class="form-label">Quantity</label>
-                            <input type="number" id="qty{{ $post->id }}" class="form-control" value="1" min="1"
-                                max="{{ $post->qty }}">
+                    <div class="row align-items-center">
+                        <!-- Image Section -->
+                        <div class="col-md-5 text-center">
+                            <img src="{{ asset('storage/uploads/' . basename($post->image)) }}"
+                                class="img-fluid rounded" alt="Post Image">
                         </div>
 
-                        <!-- Unit options -->
-                        <div class="mb-3">
-                            <label class="form-label">Unit</label>
-                            <div class="d-flex">
-                                <div class="form-check me-3">
-                                    <input class="form-check-input" type="radio" name="unit{{ $post->id }}"
-                                        id="kg{{ $post->id }}" value="kg" checked>
-                                    <label class="form-check-label" for="kg{{ $post->id }}">Kg</label>
+                        <!-- Details Section -->
+                        <div class="col-md-7">
+                            <p><strong>Description:</strong> {{ $post->content }}</p>
+                            <p><strong>Price:</strong> Rp {{ number_format($post->price, 0, ',', '.') }}</p>
+                            <p><strong>Qty Available:</strong> {{ $post->qty }} {{ $post->unit }}</p>
+
+                            <form wire:submit.prevent="store({{$post->id}})">
+                                <!-- Input for qty -->
+                                <div class="mb-3">
+                                    <label for="qty-{{ $post->id }}" class="form-label">Quantity</label>
+                                    <input type="number" id="qty-{{ $post->id }}" wire:model="qty" class="form-control"
+                                        min="1">
                                 </div>
-                                <div class="form-check me-3">
-                                    <input class="form-check-input" type="radio" name="unit{{ $post->id }}"
-                                        id="kwt{{ $post->id }}" value="kwt">
-                                    <label class="form-check-label" for="kwt{{ $post->id }}">KwT</label>
+
+                                <!-- Unit options -->
+                                <div class="mb-3">
+                                    <label class="form-label">Unit</label>
+                                    <div class="d-flex">
+                                        <div class="form-check me-3">
+                                            <input class="form-check-input" type="radio" wire:model="unit"
+                                                id="kg-{{ $post->id }}" value="kg">
+                                            <label class="form-check-label" for="kg-{{ $post->id }}">Kg</label>
+                                        </div>
+                                        <div class="form-check me-3">
+                                            <input class="form-check-input" type="radio" wire:model="unit"
+                                                id="kwt-{{ $post->id }}" value="kwt">
+                                            <label class="form-check-label" for="kwt-{{ $post->id }}">KwT</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" wire:model="unit"
+                                                id="ton-{{ $post->id }}" value="ton">
+                                            <label class="form-check-label" for="ton-{{ $post->id }}">Ton</label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="unit{{ $post->id }}"
-                                        id="ton{{ $post->id }}" value="ton">
-                                    <label class="form-check-label" for="ton{{ $post->id }}">Ton</label>
+
+                                <input type="hidden" wire:model='postId'>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Confirm Purchase</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Confirm Purchase</button>
-                </div>
-                </form>
             </div>
         </div>
     </div>

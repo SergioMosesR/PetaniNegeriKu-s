@@ -21,7 +21,12 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(route('DashboardPetani'));
+                if (Auth()->user()->role === 'Petani') {
+                    return redirect(route('DashboardPetani'));
+                } else {
+                    return redirect(route('DashboardDinas'));
+                }
+
             }
         }
 

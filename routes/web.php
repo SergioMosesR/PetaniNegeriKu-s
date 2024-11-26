@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\DinasController;
 use App\Http\Controllers\PetaniController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,11 +25,19 @@ Route::middleware('guest')->group(function () {
     Route::post('authenticate/user/register', [AuthController::class, 'RegisterProcess'])->name('AuthenticateRegister');
 });
 
-Route::middleware('auth')->group(function(){
-    Route::prefix('petani')->group(function(){
+Route::middleware('auth')->group(function () {
+    Route::prefix('petani')->group(function () {
         Route::get('dashboard', [PetaniController::class, 'DashboardPetani'])->name('DashboardPetani');
         Route::get('profile', [PetaniController::class, 'ProfilePetani'])->name('ProfilePetani');
+        Route::get('pending', [PetaniController::class, 'Pending'])->name('Pending');
+        Route::put('pending/proccess/{id}', [PetaniController::class, 'ProccessPending'])->name('ProccessPending');
+        Route::delete('delete/proccess/{id}', [PetaniController::class, 'DeletePending'])->name('DeletePending');
     });
-});
+    Route::middleware('role')->group(function () {
+        Route::prefix('dinas')->group(function () {
+            Route::get('dashboard', [DinasController::class, 'Dashboard'])->name('DashboardDinas');
+        });
+    });
 
-Route::get('user/logout', [AuthController::class, 'Logout'])->name('AuthenticateLogout');
+    Route::get('logout', [AuthController::class, 'Logout'])->name('AuthenticateLogout');
+});

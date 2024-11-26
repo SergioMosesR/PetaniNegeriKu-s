@@ -19,7 +19,7 @@ class Post extends Component
 
     public function render()
     {
-        $Posts = ModelsPost::with('user')
+        $Posts = ModelsPost::where('user_id', Auth::user()->id)->with('user')
             ->orderBy('title', 'asc')
             ->paginate(9);;
         return view('livewire.post', ['posts' => $Posts]);

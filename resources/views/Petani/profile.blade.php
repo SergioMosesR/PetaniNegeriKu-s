@@ -51,6 +51,7 @@
     <div class="main-container">
         <!-- Card Profile Petani -->
         <div class="card">
+            <a href="{{route('Pending')}}">Pending</a>
             <div class="card-body">
                 @livewire('profilepetani')
             </div>

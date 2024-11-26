@@ -38,8 +38,16 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
-        return redirect(route('DashboardPetani'));
+
+        // Check the user's role and redirect accordingly
+        $user = Auth::user();
+        if ($user->role == 'Dinas') {
+            return redirect(route('DashboardDinas'));
+        }
+
+        return redirect(route('DashboardPetani')); // Default redirect to Petani dashboard
     }
+
     public function RegisterProcess(Request $request)
     {
         $validator = Validator::make($request->all(), [

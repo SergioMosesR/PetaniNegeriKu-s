@@ -34,12 +34,14 @@ Route::middleware('auth')->group(function () {
         Route::delete('delete/proccess/{id}', [PetaniController::class, 'DeletePending'])->name('DeletePending');
         Route::get('berita', [PetaniController::class, 'BeritaDinas'])->name('BeritaPetani');
         Route::get('detail/berita/{id}', [PetaniController::class, 'DetailBerita'])->name('DetailBerita');
+        Route::get('notification', [PetaniController::class, 'Notification'])->name('NotificationPetani');
     });
     Route::middleware('role')->group(function () {
         Route::prefix('dinas')->group(function () {
             Route::get('dashboard', [DinasController::class, 'Dashboard'])->name('DashboardDinas');
             Route::get('berita', [DinasController::class, 'BeritaDinas'])->name('BeritaDinas');
             Route::get('undangan', [DinasController::class, 'Undangan'])->name('UndanganDinas');
+            Route::get('detail/undangan/{id}', [DinasController::class, 'DetailUndangan'])->name('DetailUndangan');
         });
     });
 

@@ -3,7 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Undangan as ModelsUndangan;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -11,7 +13,7 @@ class Undangan extends Component
 {
     use WithFileUploads;
 
-    public $user_id, $title, $content, $penyelenggara, $waktu, $tempat, $image, $undanganId;
+    public $user_id, $title, $content, $penyelenggara, $waktu, $tempat, $image, $undanganId, $selectedUndangan = [];
     public $isEdit = false;
 
     public function mount()
@@ -48,12 +50,25 @@ class Undangan extends Component
 
         $validatedData['user_id'] = $this->user_id;
 
-        ModelsUndangan::create($validatedData);
+        $undangan = ModelsUndangan::create($validatedData);
+
+        $users = User::where('role', 'Petani')->get();
+
+        foreach ($users as $user) {
+            DB::table('undangan_users')->insert([
+                'user_id' => $user->id,
+                'undangan_id' => $undangan->id,
+                'is_read' => false, // Default value for new notification
+                'read_at' => null,  // Default value for new notification
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
         session()->flash('success', 'Undangan berhasil dibuat!');
-
-
         $this->resetForm();
     }
+
 
     public function edit($id)
     {

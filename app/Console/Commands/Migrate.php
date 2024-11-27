@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class Migrate extends Command
 {
@@ -13,6 +14,8 @@ class Migrate extends Command
     public function handle()
     {
         $this->call('migrate:fresh');
+
+        Artisan::call('db:seed', ['--class' => 'User']);
 
         $this->info('Database successfully refreshed');
     }

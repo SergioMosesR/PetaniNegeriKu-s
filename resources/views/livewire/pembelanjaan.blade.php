@@ -1,36 +1,43 @@
 <div>
-    <div class="row">
-        @foreach ($posts as $post)
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                @if ($post->image)
-                <img src="{{ asset('storage/uploads/' . basename($post->image)) }}" class="card-img-top"
-                    alt="Post Image">
-                @endif
-
-                <div class="card-body">
-                    <h5 class="card-title">{{ $post->title }}</h5>
-                    <p class="card-text text-truncate">{{ $post->content }}</p>
-
-                    <p class="text-muted small">
-                        Author: {{ $post->user->name }} <br>
-                        Posted on: {{ $post->created_at->format('d-m-Y H:i') }}
-                    </p>
-
-                    <p class="text-muted small">
-                        Qty: {{ $post->qty }} {{ $post->unit }} |
-                        Price: Rp {{ number_format($post->price, 0, ',', '.') }}
-                    </p>
-                </div>
-
-                <!-- Buy Button with Modal Trigger -->
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal-{{ $post->id }}">
-                    Buy
-                </button>
-            </div>
+    <!-- Check if there are no posts -->
+    @if($posts->isEmpty())
+        <div class="alert alert-warning" role="alert">
+            Tidak ada postingan.
         </div>
-        @endforeach
-    </div>
+    @else
+        <div class="row">
+            @foreach ($posts as $post)
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    @if ($post->image)
+                    <img src="{{ asset('storage/uploads/' . basename($post->image)) }}" class="card-img-top"
+                        alt="Post Image">
+                    @endif
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $post->title }}</h5>
+                        <p class="card-text text-truncate">{{ $post->content }}</p>
+
+                        <p class="text-muted small">
+                            Author: {{ $post->user->name }} <br>
+                            Posted on: {{ $post->created_at->format('d-m-Y H:i') }}
+                        </p>
+
+                        <p class="text-muted small">
+                            Qty: {{ $post->qty }} {{ $post->unit }} |
+                            Price: Rp {{ number_format($post->price, 0, ',', '.') }}
+                        </p>
+                    </div>
+
+                    <!-- Buy Button with Modal Trigger -->
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal-{{ $post->id }}">
+                        Buy
+                    </button>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    @endif
 
     <!-- Modal Template -->
     @foreach ($posts as $post)
@@ -46,7 +53,7 @@
                     <div class="row align-items-center">
                         <!-- Image Section -->
                         <div class="col-md-5 text-center">
-                            <img src="{{ asset('storage/uploads/' . basename($post->image)) }}"
+                            <img src="{{ asset('storage/uploads/' . basename($post->image)) }} "
                                 class="img-fluid rounded" alt="Post Image">
                         </div>
 

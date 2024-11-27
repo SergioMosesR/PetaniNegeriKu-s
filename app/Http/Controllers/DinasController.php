@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Undangan;
 use Illuminate\Http\Request;
 
 class DinasController extends Controller
@@ -20,5 +21,10 @@ class DinasController extends Controller
     public function Undangan()
     {
         return view('Dinas.undangan');
+    }
+
+    public function DetailUndangan($id){
+        $undangan = Undangan::findOrFail($id);
+        return view('Dinas.detailUndangan', ['undangan' => $undangan]);
     }
 }

@@ -65,4 +65,9 @@ class PetaniController extends Controller
         return view('Petani.detailBerita', compact('BeritaDinas'));
     }
 
+    public function Notification(){
+        return view('Petani.notification');
+    }
+
+
 }

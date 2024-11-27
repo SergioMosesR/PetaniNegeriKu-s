@@ -12,4 +12,7 @@ class Controller extends BaseController
     public function Welcome(){
         return view('welcome');
     }
+
+    
+
 }

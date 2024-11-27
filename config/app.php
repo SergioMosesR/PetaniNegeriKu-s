@@ -181,6 +181,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        ArielMejiaDev\LarapexCharts\LarapexChartsServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -209,7 +211,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        'LarapexChart' => ArielMejiaDev\LarapexCharts\Facades\LarapexChart::class,
     ])->toArray(),
 
 ];

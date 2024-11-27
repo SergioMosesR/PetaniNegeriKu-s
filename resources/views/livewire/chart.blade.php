@@ -1,38 +1,17 @@
-<div>
-    <div>
-        <!-- Filter Wilayah -->
-        <div class="form-group">
-            <label for="region">Pilih Wilayah</label>
-            <select wire:model="region" class="form-control" id="region">
-                <option value="Jawa Tengah">Jawa Tengah</option>
-                <option value="Jakarta">Jakarta</option>
-                <option value="Yogyakarta">Yogyakarta</option>
-                <!-- Tambahkan wilayah lainnya sesuai dengan data wilayah di user -->
-            </select>
+<div class="container">
+    <!-- Menampilkan wilayah yang terdaftar berdasarkan pencarian -->
+    <div class="row">
+        @foreach($charts as $chart)
+        <div class="col-md-4 mb-4">
+            <!-- Card untuk setiap wilayah -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>{{ $chart->getTitle() }}</h3>
+                    <!-- Menampilkan pie chart untuk wilayah -->
+                    {!! $chart->render() !!}
+                </div>
+            </div>
         </div>
-
-        <!-- Menampilkan Chart -->
-        <canvas id="myChart" width="400" height="200"></canvas>
+        @endforeach
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener('livewire:load', function () {
-            var ctx = document.getElementById('myChart').getContext('2d');
-
-            var chartData = @json($data); // Data yang dikirim dari Livewire component
-
-            var myChart = new Chart(ctx, {
-                type: 'bar', // Jenis chart, bisa disesuaikan dengan jenis chart yang diinginkan
-                data: chartData,
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                });
-        });
-    </script>
 </div>

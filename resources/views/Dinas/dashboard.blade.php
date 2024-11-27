@@ -10,7 +10,11 @@
 
 <body>
     <h1>Dashboard Dinas</h1>
-    @livewire('chart')
+    <div class="charts">
+        <div class="chart-container" style="margin-bottom: 20px;">
+            {{-- @livewire('chart') --}}
+        </div>
+    </div>
 </body>
 
 </html>

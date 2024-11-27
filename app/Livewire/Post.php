@@ -23,7 +23,7 @@ class Post extends Component
         $Posts = ModelsPost::where('user_id', Auth::user()->id)
             ->with('user')
             ->orderBy('title', 'asc')
-            ->paginate(9);
+            ->paginate();
 
         $commodities = ['Rice', 'Corn', 'Wheat', 'Soybean']; // Ganti sesuai kebutuhan
 

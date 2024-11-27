@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\BeritaDinas;
 use App\Models\Pembelanjaan;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -52,4 +53,16 @@ class PetaniController extends Controller
 
         return back()->with('success', 'Pending Order Deleted');
     }
+
+    public function BeritaDinas()
+    {
+        $BeritaDinas = BeritaDinas::paginate(5);
+        return view('Petani.berita', compact('BeritaDinas'));
+    }
+
+    public function DetailBerita($id){
+        $BeritaDinas = BeritaDinas::findOrFail($id);
+        return view('Petani.detailBerita', compact('BeritaDinas'));
+    }
+
 }

@@ -32,10 +32,14 @@ Route::middleware('auth')->group(function () {
         Route::get('pending', [PetaniController::class, 'Pending'])->name('Pending');
         Route::put('pending/proccess/{id}', [PetaniController::class, 'ProccessPending'])->name('ProccessPending');
         Route::delete('delete/proccess/{id}', [PetaniController::class, 'DeletePending'])->name('DeletePending');
+        Route::get('berita', [PetaniController::class, 'BeritaDinas'])->name('BeritaPetani');
+        Route::get('detail/berita/{id}', [PetaniController::class, 'DetailBerita'])->name('DetailBerita');
     });
     Route::middleware('role')->group(function () {
         Route::prefix('dinas')->group(function () {
             Route::get('dashboard', [DinasController::class, 'Dashboard'])->name('DashboardDinas');
+            Route::get('berita', [DinasController::class, 'BeritaDinas'])->name('BeritaDinas');
+            Route::get('undangan', [DinasController::class, 'Undangan'])->name('UndanganDinas');
         });
     });
 

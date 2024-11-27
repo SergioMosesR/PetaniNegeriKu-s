@@ -16,10 +16,34 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('title');
             $table->text('content');
+            $table->enum('komoditas', [
+                'Padi',
+                'Jagung',
+                'Kedelai',
+                'Kelapa Sawit',
+                'Kopi',
+                'Kakao',
+                'Tebu',
+                'Karet',
+                'Cengkeh',
+                'Lada',
+                'Kayu Manis',
+                'Ikan Tuna',
+                'Ikan Cakalang',
+                'Udang',
+                'Rumput Laut',
+                'Minyak Kelapa',
+                'Gas Alam',
+                'Batu Bara',
+                'Nikel',
+                'Timah',
+                'Emas',
+                'Bauksit',
+            ]);
             $table->string('image');
             $table->integer('qty');
             $table->enum('unit', ['kg', 'kwt', 'ton']);
-            $table->decimal('price', 10,2);
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
     }

@@ -12,17 +12,25 @@ use Livewire\WithPagination;
 class Post extends Component
 {
     use WithFileUploads, WithPagination;
-    public $title, $content, $image, $qty, $unit, $price;
+
+    public $title, $content, $image, $qty, $unit, $price, $komoditas;
     public $Update = false;
     public $postIdToEdit = null;
     public $userId;
 
     public function render()
     {
-        $Posts = ModelsPost::where('user_id', Auth::user()->id)->with('user')
+        $Posts = ModelsPost::where('user_id', Auth::user()->id)
+            ->with('user')
             ->orderBy('title', 'asc')
-            ->paginate(9);;
-        return view('livewire.post', ['posts' => $Posts]);
+            ->paginate(9);
+
+        $commodities = ['Rice', 'Corn', 'Wheat', 'Soybean']; // Ganti sesuai kebutuhan
+
+        return view('livewire.post', [
+            'posts' => $Posts,
+            'commodities' => $commodities,
+        ]);
     }
 
     public function mount()
@@ -46,6 +54,7 @@ class Post extends Component
             'qty' => 'nullable|numeric|min:1',
             'unit' => 'nullable|string|in:kg,kwt,ton',
             'price' => 'nullable|numeric|min:1',
+            'komoditas' => 'nullable|string|max:255',
         ]);
 
         if ($this->image) {
@@ -57,7 +66,7 @@ class Post extends Component
         ModelsPost::create($validatedData);
 
         session()->flash('success', 'Post uploaded successfully!');
-        $this->resetForm(); // Reset form setelah data tersimpan
+        $this->resetForm();
     }
 
     public function edit($postId)
@@ -65,13 +74,13 @@ class Post extends Component
         $post = ModelsPost::find($postId);
 
         if ($post) {
-            // Isi nilai form dengan data yang akan diedit
             $this->title = $post->title;
             $this->content = $post->content;
-            $this->image = null; // Reset image untuk pengeditan
+            $this->image = null;
             $this->qty = $post->qty;
             $this->unit = $post->unit;
             $this->price = $post->price;
+            $this->komoditas = $post->komoditas;
             $this->postIdToEdit = $post->id;
             $this->Update = true;
         }
@@ -86,6 +95,7 @@ class Post extends Component
             'qty' => 'nullable|numeric|min:0',
             'unit' => 'nullable|string|in:kg,kwt,ton',
             'price' => 'nullable|numeric|min:0',
+            'komoditas' => 'nullable|string|max:255',
         ]);
 
         if ($this->postIdToEdit) {
@@ -108,7 +118,6 @@ class Post extends Component
         }
     }
 
-
     public function delete($postId)
     {
         $post = ModelsPost::find($postId);
@@ -119,7 +128,6 @@ class Post extends Component
         }
     }
 
-
     public function resetForm()
     {
         $this->title = '';
@@ -128,7 +136,8 @@ class Post extends Component
         $this->qty = null;
         $this->unit = null;
         $this->price = null;
+        $this->komoditas = null;
         $this->postIdToEdit = null;
-        $this->Update = false; // Kembali ke mode submit baru
+        $this->Update = false;
     }
 }

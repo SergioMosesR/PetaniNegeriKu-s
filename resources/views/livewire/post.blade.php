@@ -52,6 +52,26 @@
                 </select>
             </div>
 
+            <!-- Komoditas Selection -->
+            <div class="mb-3 col-md-6">
+                <label for="komoditas" class="form-label">Komoditas</label>
+                <select wire:model='komoditas' class="form-select" id="komoditas">
+                    <option value="">Pilih Komoditas</option>
+                    <option value="Padi">Padi</option>
+                    <option value="Jagung">Jagung</option>
+                    <option value="Kelapa Sawit">Kelapa Sawit</option>
+                    <option value="Kopi">Kopi</option>
+                    <option value="Kakao">Kakao</option>
+                    <option value="Karet">Karet</option>
+                    <option value="Cengkeh">Cengkeh</option>
+                    <option value="Lada">Lada</option>
+                    <option value="Kayu Manis">Kayu Manis</option>
+                    <option value="Rumput Laut">Rumput Laut</option>
+                    <option value="Udang">Udang</option>
+                    <option value="Ikan Tuna">Ikan Tuna</option>
+                </select>
+            </div>
+
             <!-- Price Input -->
             <div class="mb-3 col-md-6">
                 <label for="price" class="form-label">Post Price</label>
@@ -84,6 +104,7 @@
                     </p>
 
                     <p class="text-muted small">
+                        Komoditas: {{ $post->komoditas }} <br>
                         Qty: {{ $post->qty }} {{ $post->unit }} |
                         Price: Rp {{ number_format($post->price, 0, ',', '.') }}
                     </p>
@@ -102,40 +123,4 @@
     <div class="d-flex justify-content-center mt-4">
         {{ $posts->links('pagination::bootstrap-4') }}
     </div>
-    <style>
-        /* Custom pagination style */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .pagination .page-item {
-            margin: 0 5px;
-        }
-
-        .pagination .page-link {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .pagination .page-link:hover {
-            background-color: #0056b3;
-            color: #fff;
-        }
-
-        .pagination .page-item.active .page-link {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .pagination .page-item.disabled .page-link {
-            background-color: #e0e0e0;
-            color: #6c757d;
-        }
-    </style>
-
 </div>

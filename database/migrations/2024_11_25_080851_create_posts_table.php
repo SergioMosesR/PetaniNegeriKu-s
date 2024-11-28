@@ -42,7 +42,7 @@ return new class extends Migration
             ]);
             $table->string('image');
             $table->integer('qty');
-            $table->enum('unit', ['kg', 'kwt', 'ton']);
+            $table->enum('unit', ['kg']);
             $table->decimal('price', 10, 2);
             $table->timestamps();
         });

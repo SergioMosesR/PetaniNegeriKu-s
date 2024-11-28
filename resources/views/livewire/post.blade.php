@@ -47,8 +47,6 @@
                 <select wire:model='unit' class="form-select" id="unit">
                     <option value="">Select Unit</option>
                     <option value="kg">Kg</option>
-                    <option value="kwt">Kwt</option>
-                    <option value="ton">Ton</option>
                 </select>
             </div>
 

@@ -1,42 +1,42 @@
 <div>
     <!-- Check if there are no posts -->
     @if($posts->isEmpty())
-        <div class="alert alert-warning" role="alert">
-            Tidak ada postingan.
-        </div>
+    <div class="alert alert-warning" role="alert">
+        Tidak ada postingan.
+    </div>
     @else
-        <div class="row">
-            @foreach ($posts as $post)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    @if ($post->image)
-                    <img src="{{ asset('storage/uploads/' . basename($post->image)) }}" class="card-img-top"
-                        alt="Post Image">
-                    @endif
+    <div class="row">
+        @foreach ($posts as $post)
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                @if ($post->image)
+                <img src="{{ asset('storage/uploads/' . basename($post->image)) }}" class="card-img-top"
+                    alt="Post Image">
+                @endif
 
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $post->title }}</h5>
-                        <p class="card-text text-truncate">{{ $post->content }}</p>
+                <div class="card-body">
+                    <h5 class="card-title">{{ $post->title }}</h5>
+                    <p class="card-text text-truncate">{{ $post->content }}</p>
 
-                        <p class="text-muted small">
-                            Author: {{ $post->user->name }} <br>
-                            Posted on: {{ $post->created_at->format('d-m-Y H:i') }}
-                        </p>
+                    <p class="text-muted small">
+                        Author: {{ $post->user->name }} <br>
+                        Posted on: {{ $post->created_at->format('d-m-Y H:i') }}
+                    </p>
 
-                        <p class="text-muted small">
-                            Qty: {{ $post->qty }} {{ $post->unit }} |
-                            Price: Rp {{ number_format($post->price, 0, ',', '.') }}
-                        </p>
-                    </div>
-
-                    <!-- Buy Button with Modal Trigger -->
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal-{{ $post->id }}">
-                        Buy
-                    </button>
+                    <p class="text-muted small">
+                        Qty: {{ $post->qty }} {{ $post->unit }} |
+                        Price: Rp {{ number_format($post->price, 0, ',', '.') }}
+                    </p>
                 </div>
+
+                <!-- Buy Button with Modal Trigger -->
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal-{{ $post->id }}">
+                    Buy
+                </button>
             </div>
-            @endforeach
         </div>
+        @endforeach
+    </div>
     @endif
 
     <!-- Modal Template -->
@@ -79,16 +79,6 @@
                                             <input class="form-check-input" type="radio" wire:model="unit"
                                                 id="kg-{{ $post->id }}" value="kg">
                                             <label class="form-check-label" for="kg-{{ $post->id }}">Kg</label>
-                                        </div>
-                                        <div class="form-check me-3">
-                                            <input class="form-check-input" type="radio" wire:model="unit"
-                                                id="kwt-{{ $post->id }}" value="kwt">
-                                            <label class="form-check-label" for="kwt-{{ $post->id }}">KwT</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" wire:model="unit"
-                                                id="ton-{{ $post->id }}" value="ton">
-                                            <label class="form-check-label" for="ton-{{ $post->id }}">Ton</label>
                                         </div>
                                     </div>
                                 </div>

@@ -60,7 +60,7 @@
         <h1 class="text-center text-primary">Petani Negeriku</h1>
 
         <a href="{{ route('NotificationPetani') }}"><i class="fa-regular fa-bell"></i></a>
-
+        <a href="{{ route('KomunitasPetani') }}"><i class="fa-solid fa-user-group"></i></a>
         <!-- Card Pembelanjaan -->
         <div class="card">
             <div class="card-body">

@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
         Route::get('berita', [PetaniController::class, 'BeritaDinas'])->name('BeritaPetani');
         Route::get('detail/berita/{id}', [PetaniController::class, 'DetailBerita'])->name('DetailBerita');
         Route::get('notification', [PetaniController::class, 'Notification'])->name('NotificationPetani');
+        Route::get('komunitas', [PetaniController::class, 'Komunitas'])->name('KomunitasPetani');
     });
     Route::middleware('role')->group(function () {
         Route::prefix('dinas')->group(function () {

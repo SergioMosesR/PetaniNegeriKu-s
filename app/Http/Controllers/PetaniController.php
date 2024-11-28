@@ -60,14 +60,19 @@ class PetaniController extends Controller
         return view('Petani.berita', compact('BeritaDinas'));
     }
 
-    public function DetailBerita($id){
+    public function DetailBerita($id)
+    {
         $BeritaDinas = BeritaDinas::findOrFail($id);
         return view('Petani.detailBerita', compact('BeritaDinas'));
     }
 
-    public function Notification(){
+    public function Notification()
+    {
         return view('Petani.notification');
     }
 
-
+    public function Komunitas()
+    {
+        return view('Petani.komunitas');
+    }
 }

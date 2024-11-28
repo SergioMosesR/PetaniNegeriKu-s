@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::get('pending', [PetaniController::class, 'Pending'])->name('Pending');
         Route::get('service', [PetaniController::class, 'ServicePetani'])->name('ServicePetani');
         Route::get('belanja', [PetaniController::class, 'PembelanjaanPetani'])->name('PembelanjaanPetani');
+        Route::put('belanja/detail/{id}', [PetaniController::class, 'BelanjaDetailPetani'])->name('BelanjaDetailPetani');
         Route::put('pending/proccess/{id}', [PetaniController::class, 'ProccessPending'])->name('ProccessPending');
         Route::delete('delete/proccess/{id}', [PetaniController::class, 'DeletePending'])->name('DeletePending');
         Route::get('berita', [PetaniController::class, 'BeritaDinas'])->name('BeritaPetani');

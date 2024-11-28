@@ -1,9 +1,9 @@
 <div>
     <!-- Check if there are no posts -->
     @if($posts->isEmpty())
-        <div class="alert alert-warning" role="alert">
-            Tidak ada postingan.
-        </div>
+    <div class="alert alert-warning" role="alert">
+        Tidak ada postingan.
+    </div>
     @else
     <div class="row">
         @foreach ($posts as $post)
@@ -11,7 +11,8 @@
             <div class="product-card">
                 <!-- Product Image -->
                 @if ($post->image)
-                <img src="{{ asset('storage/uploads/' . basename($post->image)) }}" alt="{{ $post->title }}" class="img-fluid">
+                <img src="{{ asset('storage/uploads/' . basename($post->image)) }}" alt="{{ $post->title }}"
+                    class="img-fluid">
                 @endif
 
                 <!-- Product Title -->
@@ -30,9 +31,12 @@
                 </div>
 
                 <!-- Buy Button -->
-                <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#postModal-{{ $post->id }}">
+                {{-- <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal"
+                    data-bs-target="#postModal-{{ $post->id }}">
                     Buy
-                </button>
+                </button> --}}
+                <a href="{{route('BelanjaDetailPetani', ['id' => $post->id])}}">Buy</a>
+
             </div>
         </div>
         @endforeach
@@ -100,7 +104,8 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary">Confirm Purchase</button>
+                                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary">Confirm
+                                        Purchase</button>
                                 </div>
                             </form>
                         </div>

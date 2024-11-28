@@ -24,6 +24,11 @@ class PetaniController extends Controller
         return view('Petani.belanja');
     }
 
+    public function BelanjaDetailPetani($id) {
+        $Detail = Pembelanjaan::where('id', $id)->first();
+        return view('Petani.belanjadetail', compact('Detail'));
+    }
+
     public function ProfilePetani()
     {
         return view('Petani.profile');

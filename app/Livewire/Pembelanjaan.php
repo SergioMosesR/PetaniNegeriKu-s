@@ -18,7 +18,7 @@ class Pembelanjaan extends Component
 
     public function render()
     {
-        $posts = Post::with('user')->orderBy('title', 'asc')->paginate(18);
+        $posts = Post::with('user')->orderBy('title', 'asc')->paginate(15);
         return view('livewire.pembelanjaan', ['posts' => $posts]);
     }
 

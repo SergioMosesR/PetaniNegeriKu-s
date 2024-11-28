@@ -7,28 +7,76 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Petani NegeriKu || Authentication</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            margin: 0;
             background-color: #f3f4f6;
         }
 
         .auth-container {
-            background: #ffffff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
+            width: 900px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
         }
 
-        .auth-container h1 {
+        .left-section {
+            padding: 40px;
+            flex: 1;
+        }
+
+        .right-section {
+            background-image: url('/assets/IMG/petani1.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .right-section .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Half-transparent black background */
+            backdrop-filter: blur(5px); /* Apply blur effect */
+            z-index: 1;
+        }
+
+        .right-section h2 {
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .right-section p {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin: 15px 0;
+            line-height: 1.6;
+            z-index: 2;
+        }
+
+        .right-section .btn {
+            margin-top: 10px;
+            z-index: 2;
+        }
+
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
         }
 
         .toggle-link {
@@ -55,78 +103,80 @@
 
 <body>
     <div class="auth-container">
-        <!-- Login Form -->
-        <div id="login-form">
-            <h1 class="h4">Login</h1>
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+        <!-- Left Section -->
+        <div class="left-section">
+            <div class="text-center mb-4">
+                <img src="{{ asset('assets/IMG/logo.png') }}" alt="Logo Petani Negeriku" width="120">
+            </div>
+            <h3 class="text-center fw-bold text-success mb-4" id="form-title">Masuk ke Petani Negeriku</h3>
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form action="{{ route('AuthenticateProcess') }}" method="post">
+            <!-- Login Form -->
+            <form id="login-form" action="{{ route('AuthenticateProcess') }}" method="post">
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Masukkan email Anda" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Masukkan password Anda" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <div class="d-flex justify-content-between mb-3">
+                    <a href="#" class="text-decoration-none text-muted">Lupa Password?</a>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Masuk</button>
+                <div class="toggle-link mt-3">
+                    <p>Belum punya akun? <a href="#" onclick="toggleForms()">Daftar</a></p>
+                </div>
             </form>
 
-            <div class="toggle-link mt-3">
-                <p>Don't have an account? <a href="#" onclick="toggleForms()">Register</a></p>
-            </div>
-        </div>
-
-        <!-- Register Form -->
-        <div id="register-form" class="hidden">
-            <h1 class="h4">Register</h1>
-            <form action="{{ route('AuthenticateRegister') }}" method="post">
+            <!-- Register Form -->
+            <form id="register-form" class="hidden" action="{{ route('AuthenticateRegister') }}" method="post">
                 @csrf
                 <div class="mb-3">
                     <label for="register-email" class="form-label">Email</label>
-                    <input type="email" name="email" id="register-email" class="form-control" placeholder="Enter your email" required>
+                    <input type="email" name="email" id="register-email" class="form-control" placeholder="Masukkan email Anda" required>
                 </div>
                 <div class="mb-3">
-                    <label for="register-name" class="form-label">Name</label>
-                    <input type="text" name="name" id="register-name" class="form-control" placeholder="Enter your name" required>
+                    <label for="register-name" class="form-label">Nama</label>
+                    <input type="text" name="name" id="register-name" class="form-control" placeholder="Masukkan nama Anda" required>
                 </div>
                 <div class="mb-3">
                     <label for="register-password" class="form-label">Password</label>
-                    <input type="password" name="password" id="register-password" class="form-control" placeholder="Enter your password" required>
+                    <input type="password" name="password" id="register-password" class="form-control" placeholder="Masukkan password Anda" required>
                 </div>
-                <button type="submit" class="btn btn-success w-100">Register</button>
+                <button type="submit" class="btn btn-success w-100">Daftar</button>
+                <div class="toggle-link mt-3">
+                    <p>Sudah punya akun? <a href="#" onclick="toggleForms()">Login</a></p>
+                </div>
             </form>
+        </div>
 
-            <div class="toggle-link mt-3">
-                <p>Already have an account? <a href="#" onclick="toggleForms()">Login</a></p>
-            </div>
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="overlay"></div> <!-- Overlay Layer with blur -->
+            <h2>Hai, Teman!</h2>
+            <p>"Masukkan detail pribadi Anda dan mulailah perjalanan bersama kami."</p>
+            <a href="#" class="btn btn-outline-light" onclick="toggleForms()">Daftar</a>
         </div>
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function toggleForms() {
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
+            const formTitle = document.getElementById('form-title');
             loginForm.classList.toggle('hidden');
             registerForm.classList.toggle('hidden');
+
+            // Update form title
+            if (loginForm.classList.contains('hidden')) {
+                formTitle.innerText = 'Daftar ke Petani Negeriku';
+            } else {
+                formTitle.innerText = 'Masuk ke Petani Negeriku';
+            }
         }
     </script>
 </body>

@@ -9,4 +9,8 @@ class Komunitas extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'description', 'image'];
+    public function DetailKomunitas()
+    {
+        return $this->hasMany(DetailKomunitas::class, 'id_komunitas');
+    }
 }

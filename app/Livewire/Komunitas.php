@@ -41,14 +41,59 @@ class Komunitas extends Component
         $this->resetForm();
     }
 
-    public function resetForm(){
+    public function resetForm()
+    {
         $this->name = '';
         $this->description = '';
         $this->image = null;
     }
 
+    public function Bergabung($komunitasId)
+    {
+        $user = Auth::user();
+
+        $existingMembership = DetailKomunitas::where('id_user', $user->id)
+            ->where('id_komunitas', $komunitasId)
+            ->first();
+
+        if ($existingMembership) {
+            session()->flash('error', 'You are already a member of this community.');
+            return;
+        }
+
+        DetailKomunitas::create([
+            'id_user' => $user->id,
+            'id_komunitas' => $komunitasId,
+            'role' => 'member',
+        ]);
+
+        session()->flash('success', 'You have successfully joined the community!');
+    }
+
     public function render()
     {
-        return view('livewire.komunitas');
+        $user = Auth::user();
+
+        $Tersedia = DetailKomunitas::whereNull('id_user')
+            ->orWhereNotIn('id_komunitas', function ($query) use ($user) {
+                $query->select('id_komunitas')
+                    ->from('detail_komunitas')
+                    ->where('id_user', $user->id);
+            })
+            ->get()
+            ->groupBy('id_komunitas') // Group by 'id_komunitas'
+            ->map(function ($group) {
+                return $group->first(); // Get the first record of each group
+            });
+
+
+        $komunitas = DetailKomunitas::where('id_user', $user->id)
+            ->with('Komunitas')
+            ->get();
+
+        return view('livewire.komunitas', [
+            'komunitas' => $komunitas,
+            'Tersedia' => $Tersedia,
+        ]);
     }
 }

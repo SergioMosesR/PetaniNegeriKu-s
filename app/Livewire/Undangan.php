@@ -13,7 +13,7 @@ class Undangan extends Component
 {
     use WithFileUploads;
 
-    public $user_id, $title, $content, $penyelenggara, $waktu, $tempat, $image, $undanganId, $selectedUndangan = [];
+    public $user_id, $title, $content, $penyelenggara, $waktu, $tempat, $undanganId, $selectedUndangan = [];
     public $isEdit = false;
 
     public function mount()
@@ -30,7 +30,6 @@ class Undangan extends Component
         $this->penyelenggara = '';
         $this->waktu = '';
         $this->tempat = '';
-        $this->image = null;
     }
 
     public function store()
@@ -41,12 +40,8 @@ class Undangan extends Component
             'penyelenggara' => 'required|string|max:255',
             'waktu' => 'required|date',
             'tempat' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048',
         ]);
 
-        if ($this->image) {
-            $validatedData['image'] = $this->image->store('uploads', 'public');
-        }
 
         $validatedData['user_id'] = $this->user_id;
 
@@ -91,19 +86,12 @@ class Undangan extends Component
             'penyelenggara' => 'required|string|max:255',
             'waktu' => 'required|date',
             'tempat' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048',
         ]);
 
         if ($this->undanganId) {
             $post = ModelsUndangan::find($this->undanganId);
 
             if ($post) {
-                if ($this->image) {
-                    $validatedData['image'] = $this->image->store('uploads', 'public');
-                } else {
-                    unset($validatedData['image']);
-                }
-
                 $post->update($validatedData);
 
                 session()->flash('success', 'Undangan updated successfully!');

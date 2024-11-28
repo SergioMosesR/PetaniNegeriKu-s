@@ -56,12 +56,6 @@
                         <label for="tempat" class="form-label">Tempat</label>
                         <input type="text" name="tempat" wire:model='tempat' class="form-control" id="tempat">
                     </div>
-
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Upload Gambar</label>
-                        <input type="file" name="image" wire:model='image' class="form-control" id="image">
-                    </div>
-
                     <button type="submit" class="btn btn-primary">{{ $isEdit ? 'Perbarui Undangan' : 'Buat Undangan'
                         }}</button>
                     <button type="button" wire:click="resetForm" class="btn btn-secondary">Reset Form</button>

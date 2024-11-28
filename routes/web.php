@@ -36,6 +36,9 @@ Route::middleware('auth')->group(function () {
         Route::get('detail/berita/{id}', [PetaniController::class, 'DetailBerita'])->name('DetailBerita');
         Route::get('notification', [PetaniController::class, 'Notification'])->name('NotificationPetani');
         Route::get('komunitas', [PetaniController::class, 'Komunitas'])->name('KomunitasPetani');
+        Route::get('detail/komunitas/{id}', [PetaniController::class, 'DetailKomunitas'])->name('DetailKomunitas');
+        Route::post('create/komunitas/post', [PetaniController::class, 'CreatePost'])->name('CreateKomunitasPost');
+        Route::post('create/comment', [PetaniController::class, 'MakeComment'])->name('MakeComment');
     });
     Route::middleware('role')->group(function () {
         Route::prefix('dinas')->group(function () {

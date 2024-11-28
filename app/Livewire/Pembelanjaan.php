@@ -26,7 +26,6 @@ class Pembelanjaan extends Component
     {
         // Validasi input
         $this->validate([
-            'unit' => 'required|in:kg,kwt,ton',
             'qty' => 'required|integer|min:1',
         ]);
 
@@ -44,21 +43,15 @@ class Pembelanjaan extends Component
             return;
         }
 
-        // Kalkulasi grandtotal berdasarkan unit
-        $unitConversion = [
-            'kg' => 1,
-            'kwt' => 100,
-            'ton' => 1000,
-        ];
 
-        $grandtotal = $this->qty * $post->price * ($unitConversion[$this->unit] ?? 1);
+        $grandtotal = $this->qty * $post->price;
 
         // Simpan data pembelanjaan
         ModelsPembelanjaan::create([
             'id_penjual' => $post->user_id,
             'id_pembeli' => $user->id,
             'id_post' => $postId,
-            'unit' => $this->unit,
+            'unit' => 'kg',
             'qty' => $this->qty,
             'grandtotal' => $grandtotal,
             'status' => 'pending', // Status default

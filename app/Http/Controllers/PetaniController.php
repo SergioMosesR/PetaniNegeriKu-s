@@ -16,6 +16,14 @@ use Illuminate\Support\Facades\Auth;
 class PetaniController extends Controller
 {
 
+    public function ServicePetani() {
+        return view('Petani.service');
+    }
+
+    public function PembelanjaanPetani() {
+        return view('Petani.belanja');
+    }
+
     public function ProfilePetani()
     {
         return view('Petani.profile');
@@ -23,7 +31,8 @@ class PetaniController extends Controller
 
     public function DashboardPetani()
     {
-        return view('Petani.dashboard');
+        $berita = BeritaDinas::all();
+        return view('Petani.dashboard', compact('berita'));
     }
 
     public function Pending()
@@ -77,7 +86,7 @@ class PetaniController extends Controller
 
     public function Komunitas()
     {
-        
+
         return view('Petani.komunitas');
     }
 

@@ -5,38 +5,40 @@
             Tidak ada postingan.
         </div>
     @else
-        <div class="row">
-            @foreach ($posts as $post)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    @if ($post->image)
-                    <img src="{{ asset('storage/uploads/' . basename($post->image)) }}" class="card-img-top"
-                        alt="Post Image">
-                    @endif
+    <div class="row">
+        @foreach ($posts as $post)
+        <div class="col-md-3 mb-4">
+            <div class="product-card">
+                <!-- Product Image -->
+                @if ($post->image)
+                <img src="{{ asset('storage/uploads/' . basename($post->image)) }}" alt="{{ $post->title }}" class="img-fluid">
+                @endif
 
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $post->title }}</h5>
-                        <p class="card-text text-truncate">{{ $post->content }}</p>
-
-                        <p class="text-muted small">
-                            Author: {{ $post->user->name }} <br>
-                            Posted on: {{ $post->created_at->format('d-m-Y H:i') }}
-                        </p>
-
-                        <p class="text-muted small">
-                            Qty: {{ $post->qty }} {{ $post->unit }} |
-                            Price: Rp {{ number_format($post->price, 0, ',', '.') }}
-                        </p>
-                    </div>
-
-                    <!-- Buy Button with Modal Trigger -->
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal-{{ $post->id }}">
-                        Buy
-                    </button>
+                <!-- Product Title -->
+                <div class="product-title">
+                    {{ $post->title }}
                 </div>
+
+                <!-- Product Price -->
+                <div class="product-price">
+                    Rp {{ number_format($post->price, 0, ',', '.') }}
+                </div>
+
+                <!-- Product Description (Content) -->
+                <div class="product-content text-truncate">
+                    {{ $post->content }}
+                </div>
+
+                <!-- Buy Button -->
+                <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#postModal-{{ $post->id }}">
+                    Buy
+                </button>
             </div>
-            @endforeach
         </div>
+        @endforeach
+    </div>
+
+
     @endif
 
     <!-- Modal Template -->
@@ -98,7 +100,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Confirm Purchase</button>
+                                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary">Confirm Purchase</button>
                                 </div>
                             </form>
                         </div>

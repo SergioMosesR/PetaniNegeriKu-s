@@ -8,6 +8,24 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 4.5rem;
+        }
+
+        .navbar {
+            background-color: #0d6efd;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+        }
+
         .card {
             margin: 1rem;
             padding: 20px;
@@ -17,31 +35,20 @@
             text-align: center;
         }
 
-        .row {
-            justify-content: center;
-        }
-
-        canvas {
+        footer {
             margin-top: 20px;
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-        }
-
-        .nav-link {
-            font-size: 1.1rem;
-        }
-
-        body {
-            padding-top: 4.5rem;
+            padding: 10px;
+            background-color: #0d6efd;
+            color: #fff;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <div class="container-fluid">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
             <a class="navbar-brand" href="#">Dinas Dashboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,51 +62,46 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('UndanganDinas') }}">Undangan</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('DashboardDinas') }}">Dashboard</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container">
+    <!-- Main Content -->
+    <div class="container mt-4">
         <h1 class="text-center my-4">Distribusi Komoditas</h1>
         <div class="row" id="chartsContainer"></div>
     </div>
 
-    <script>
-        // Simpan data dari Laravel ke variabel JavaScript
-        const chartData = @json($chartData);
 
-        // Container untuk semua chart
+    <!-- Scripts -->
+    <script>
+        const chartData = @json($chartData);
         const chartsContainer = document.getElementById('chartsContainer');
 
-        // Loop setiap region dan buat chart per region
         Object.entries(chartData).forEach(([region, items]) => {
-            // Buat elemen card
             const card = document.createElement('div');
             card.className = 'col-md-4 card';
 
-            // Buat elemen untuk judul dan canvas
             const regionTitle = document.createElement('h5');
             regionTitle.textContent = `Komoditas Distribusi ${region}`;
 
             const canvas = document.createElement('canvas');
             canvas.id = `chart-${region}`;
 
-            // Tambahkan elemen ke card
             card.appendChild(regionTitle);
             card.appendChild(canvas);
-
-            // Tambahkan card ke container
             chartsContainer.appendChild(card);
 
-            // Ambil data untuk labels dan values
             const labels = items.map(item => item.komoditas);
             const data = items.map(item => {
                 const total = items.reduce((sum, i) => sum + i.percentage, 0);
                 return ((item.percentage / total) * 100).toFixed(2);
             });
 
-            // Konfigurasi chart
             const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'pie',
@@ -145,7 +147,6 @@
             });
         });
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -75,9 +75,6 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-center">
             <div class="card w-100" style="max-width: 900px;">
-                <div class="card-header">
-                    <h4 class="mb-0">Buat Berita</h4>
-                </div>
                 <div class="card-body">
                     <!-- Panggil komponen Livewire Anda -->
                     @livewire('beritadinas')

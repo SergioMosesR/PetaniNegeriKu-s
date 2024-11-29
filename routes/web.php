@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
         Route::get('detail/komunitas/{id}', [PetaniController::class, 'DetailKomunitas'])->name('DetailKomunitas');
         Route::post('create/komunitas/post', [PetaniController::class, 'CreatePost'])->name('CreateKomunitasPost');
         Route::post('create/comment', [PetaniController::class, 'MakeComment'])->name('MakeComment');
+        Route::delete('delete/komunitas/{id}', [PetaniController::class, 'DeleteKomunitas'])->name('DeleteKomunitas');
     });
     Route::middleware('role')->group(function () {
         Route::prefix('dinas')->group(function () {

@@ -61,6 +61,7 @@
 
         <a href="{{ route('NotificationPetani') }}"><i class="fa-regular fa-bell"></i></a>
         <a href="{{ route('KomunitasPetani') }}"><i class="fa-solid fa-user-group"></i></a>
+        <a href="{{ route('BeritaPetani') }}"><i class="fa-solid fa-newspaper"></i></a>
         <!-- Card Pembelanjaan -->
         <div class="card">
             <div class="card-body">

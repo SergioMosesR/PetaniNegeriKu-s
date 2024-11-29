@@ -77,7 +77,7 @@ class PetaniController extends Controller
 
     public function Komunitas()
     {
-        
+
         return view('Petani.komunitas');
     }
 
@@ -121,5 +121,18 @@ class PetaniController extends Controller
 
         $comment->save();
         return back()->with('success', 'Berhasil membuat Comment');
+    }
+
+    public function DeleteKomunitas($id)
+    {
+        $komunitas = Komunitas::where('id', $id)->first();
+        $komunitas->delete();
+
+        $detailKomunitas = DetailKomunitas::where('id_komunitas', $id)->get();
+        foreach ($detailKomunitas as $key => $value) {
+            $value->delete();
+        }
+
+        return redirect(route('KomunitasPetani'))->with('success', 'Berhasil mengapus Komunitas');
     }
 }
